@@ -1,0 +1,156 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Rest base repo",
+    "description": "This is a api base to start new projects",
+    "contact": {
+      "email": "peamarelle@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Desarrollo"
+    },
+    {
+      "url": "https://node-06-apirest.herokuapp.com/api/v1",
+      "description": "Producción"
+    }
+  ],
+  "tags": [
+    {
+      "name": "users",
+      "description": "Users operations"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Get all users",
+        "description": "You can get all users in the system\n",
+        "responses": {
+          "200": {
+            "description": "User´s array list in JSON format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Create a new user",
+        "description": "Adds a new user to system",
+        "operationId": "addInventory",
+        "requestBody": {
+          "description": "New user to add",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "user created"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "summary": "update user",
+        "description": "You can update aspecific user\n",
+        "parameters": {
+          "in": "path",
+          "name": "id",
+          "required": "true"
+        },
+        "responses": {
+          "200": {
+            "description": "User in JSON format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "summary": "delete user",
+        "description": "You can delete aspecific user\n",
+        "parameters": {
+          "in": "path",
+          "name": "id",
+          "required": "true"
+        },
+        "responses": {
+          "200": {
+            "description": "User in JSON format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "objectId",
+            "format": "document id",
+            "example": "605407f340bc9e39749e20a1"
+          },
+          "name": {
+            "type": "string",
+            "example": "Natali"
+          }
+        }
+      }
+    }
+  }
+}
