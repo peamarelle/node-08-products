@@ -1,12 +1,14 @@
-# node-06-restserver
+# node-08-products
 
 # HOW TO INSTALL DEPENDENCES
 
-* Clone the repository git clone https://github.com/peamarelle/node-06-restserver.git
+* Clone the repository git clone https://github.com/peamarelle/node-08-products.git
 
-* go to directory cd node-06-restserver
+* go to directory cd node-08-products
 
 * Run command npm install
+
+* Create .env file with db url mongodb, enviroment, port and log level (info, silly, error , etc.).
 
 # Scripts
 
@@ -24,18 +26,16 @@
 * dotenv (enviroment variables).
 * winston (logger to app´s operations ).
 * swagger-ui-express (For api documentation).
-
+* mongoose (mongodb connection)
 # Servers
 
-* https://node-06-apirest.herokuapp.com/api/v1 (production).
-* http://localhost:3000/api/v1 (development).
+* http://localhost:5000/api/v1 (development).
 
 
 # Routes
 
 * GET /users (get all users).
-* POST /users (update users).
 * PUT /users/:id (update user).
 * DELETE /users/:id (delete user).
-* GET /documentation (api documentation).
+* GET /documentation (swagger api documentation).
 

@@ -1,39 +1,19 @@
 const express = require('express');
-
+const User = require('../models/user')
 /**
  * @param {express.Request} req
  * @param {express.Response} res
  */
 
-const getAllUsers = (req, res) => {
+const getAllUsers = async (req, res, next) => {
 
-    const users = [{
-        id: '605407f340bc9e39749e20a0',
-        name: 'Patricio'
-    },
-    {
-        id: '605407f340bc9e39749e20a1',
-        name: 'Natali'
-    }]
-    
-    res.json(users);
-}
+    try {
+        let users = await User.find();
+        res.json(users);
 
-/**
- * @param {express.Request} req
- * @param {express.Response} res
- */
-
-const createUser = (req, res) => {
-
-    const { id, name } = req.body;
-
-    const user = {
-        id,
-        name
+    } catch (error) {
+        next(error);
     }
-    
-    res.status(201).json(user);
 }
 
 /**
@@ -41,14 +21,24 @@ const createUser = (req, res) => {
  * @param {express.Response} res
  */
 
-const updateUser = (req, res) => {
+const createUser = async (req, res, next) => {
+    try {
 
-    const { id } = req.params;
+        const user = req.body;
 
-    const message = {
-        message: 'User modifed!'
+        const userCreated = await User.create(user)
+
+        const result = {
+            message: 'User created',
+            userCreated
+        }
+
+        res.status(201).json(result);
+
+    } catch (error) {
+        next(error);
     }
-    res.json(message);
+
 }
 
 /**
@@ -56,7 +46,32 @@ const updateUser = (req, res) => {
  * @param {express.Response} res
  */
 
-const modifyUser = (req, res) => {
+const updateUser = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        const user = req.body;
+
+        const userUpdated = await User.findByIdAndUpdate(id, user, { new: true })
+
+        const result = {
+            message: `User with id: ${id} updated!`,
+            userUpdated
+        }
+
+        res.json(result);
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+/**
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+
+const updatePartialUser = (req, res) => {
 
     const message = {
         message: 'User updated with patch!'
@@ -70,15 +85,21 @@ const modifyUser = (req, res) => {
  * @param {express.Response} res
  */
 
-const deleteUser = (req, res) => {
+const deleteUser = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        let user = await User.findById(id);
+        user.remove();
 
-    const { id } = req.params;
+        const result = {
+            message: `User with id: ${id} deleted`
+        }
 
-    const message = {
-        message: `User ${id} deleted!`
+        res.json(result);
+
+    } catch (error) {
+        next(error);
     }
-    
-    res.json(message);
 }
 
-module.exports = { getAllUsers, createUser, updateUser, modifyUser, deleteUser }
+module.exports = { getAllUsers, createUser, updateUser, updatePartialUser, deleteUser }
