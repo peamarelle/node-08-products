@@ -34,8 +34,9 @@
 
 # Routes
 
-* GET /users (get all users).
+* GET /users (get all users) with pagination.
+* GET /users/:id (find user by id).
 * PUT /users/:id (update user).
-* DELETE /users/:id (delete user).
+* DELETE /users/:id (remove user).
 * GET /documentation (swagger api documentation).
 
