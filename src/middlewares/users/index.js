@@ -1,7 +1,8 @@
-const {check, validationResult} = require('express-validator');
+const { check } = require('express-validator');
 const { findById, findUserByEmail } = require('../../services/userService');
 const AppError = require('../../errors/appError');
 const { ROLES } = require('../../constants/index');
+const { validationResult } = require('../commons');
 
 const _nameRequired = check('name', 'Name required').not().isEmpty();
 
@@ -55,14 +56,6 @@ const _idExists = check('id').custom(
 const _idRequired = check('id').not().isEmpty();
 const _idIsMongoDB = check('id').isMongoId();
 
-const _validationResult = (req, res, next) => {
-    const errors = validationResult(req);
-    if(!errors.isEmpty()) {
-        throw new AppError('Validation Errors', 400, errors.errors);
-    }
-    next();
-}
-
 
 const postRequestValidations = [
     _nameRequired,
@@ -73,7 +66,7 @@ const postRequestValidations = [
     _emailExists,
     _roleValid,
     _dateValid,
-    _validationResult,
+    validationResult,
 ]
 
 const putRequestValidations = [
@@ -84,14 +77,14 @@ const putRequestValidations = [
     _roleValid,
     _optionalEmailValid,
     _optionalEmailExists,
-    _validationResult
+    validationResult
 ]
 
 const requestValidations = [
     _idRequired,
     _idIsMongoDB,
     _idExists,
-    _validationResult
+    validationResult
 ]
 
 module.exports = {
