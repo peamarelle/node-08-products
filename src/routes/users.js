@@ -3,7 +3,9 @@ const {Router} = require('express');
 const { 
     postRequestValidations,
     putRequestValidations,
-    requestValidations
+    deleteRequestValidations,
+    getRequestValidations,
+    getAllRequestValidations
 } = require('../middlewares/users/index');
 
 const {
@@ -16,14 +18,14 @@ const {
 
 const router = Router();
 
-router.get('/', getAllUsers)
+router.get('/', getAllRequestValidations, getAllUsers)
 
-router.get('/:id', requestValidations, getUserById)
+router.get('/:id', getRequestValidations, getUserById)
 
 router.post('/', postRequestValidations, createUser)
 
 router.put('/:id', putRequestValidations, updateUser)
 
-router.delete('/:id', requestValidations, deleteUser)
+router.delete('/:id', deleteRequestValidations, deleteUser)
 
 module.exports = router;
